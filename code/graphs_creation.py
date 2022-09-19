@@ -3,7 +3,7 @@ from math import degrees
 import pandas as pd
 import networkx as nx
 
-with open('real_bot_user_nodes_0.csv', newline='') as f:
+with open('./data/real_bot_user_nodes_0.csv', newline='') as f:
     reader = csv.reader(f)
     node_list = list(reader)
 
@@ -15,7 +15,7 @@ for i in node_list:
     G.add_node(int(i[0]))
 
 
-with open('real_bot_user_edge_0.csv', newline='') as f:
+with open('./data/real_bot_user_edge_0.csv', newline='') as f:
     reader = csv.reader(f)
     edges = list(reader)
 

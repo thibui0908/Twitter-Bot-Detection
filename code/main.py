@@ -3,8 +3,7 @@ import json
 from requests_oauthlib import OAuth1Session
 import tweepy
 import time
-
-
+import os
 
 api_key = "l7vDtcBNhLJQvjsTGUaxocyaO"
 api_key_secret = "PSlzm3s9cZlBBeveHShPFRikPrt1i8hR5UxogfgjLGx6sdsBOj"
@@ -15,18 +14,22 @@ access_token_secret = "On7bZQXX0otohUL4D3SEKkcUSlVpI7eztlGbcNKR98eM7"
 auth = tweepy.OAuthHandler(api_key, api_key_secret)
 auth.set_access_token(access_token, access_token_secret)
 
+#Increment in filename
+
+FILE_INDEX = 3
+
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
-r_user_file = open("real_user.json")
+cur_path = "/Users/Diane/Twitter-Bot-Detection/Twitter-Bot-Detection/data"
+
+r_user_file = open(os.path.join(cur_path, "real_user.json"))
 
 real_user_file = json.load(r_user_file)
 
-real_user_batch_1 = real_user_file[:10]
-
-test_user = real_user_batch_1[2]
+user = real_user_file[FILE_INDEX]
 
 tweets = api.user_timeline(
-    user_id=test_user['profile']['id_str'], trim_user=True)
+    user_id=user['profile']['id_str'], trim_user=True)
 
 tweetsId = []
 
@@ -52,9 +55,6 @@ def get_followers(id):
         print("error:", e)
         time.sleep(10)
         return get_followers(id)
-
-
-
 
 def create_edge_list(rootTweetId, rootUserId, visitedTweets, graphEdges):
     if rootTweetId in visitedTweets:
@@ -84,25 +84,20 @@ visitedTweets = set()
 
 for tweetId in tweetsId:
     create_edge_list(
-        tweetId, test_user['profile']['id_str'], visitedTweets, graphEdges)
+        tweetId, user['profile']['id_str'], visitedTweets, graphEdges)
 
-len(graphEdges)
+print("Edges in real graphs: ", len(graphEdges))
 
-header = ["source", "target"]
-
-with open('real_test_user_edge_2.csv', 'w') as f:
+with open(os.path.join(cur_path, "real_user_edge_3.csv"), 'w') as f:
     writer = csv.writer(f)
-    writer.writerow(header)
     for row in graphEdges:
         writer.writerow(row)
 
-r_bot_file = open("bot_user.json")
+r_bot_file = open(os.path.join(cur_path, "bot_user.json"))
 
 bot_user_file = json.load(r_bot_file)
 
-bot_user_batch_1 = bot_user_file[:10]
-
-bot_user = bot_user_batch_1[2]
+bot_user = bot_user_file[FILE_INDEX]
 
 tweets = api.user_timeline(
     user_id=bot_user['profile']['id_str'], trim_user=True)
@@ -112,8 +107,6 @@ tweetsId_bot = []
 for t in tweets:
     tweetsId_bot.append(t._json["id_str"])
 
-len(tweetsId_bot)
-
 graphEdges_bot = []
 
 visitedTweets_bot = set()
@@ -122,13 +115,10 @@ for tweetId in tweetsId_bot:
     create_edge_list(
         tweetId, bot_user['profile']['id_str'], visitedTweets_bot, graphEdges_bot)
 
-len(graphEdges_bot)
+print("Edges in bot graph : ", len(graphEdges_bot))
 
-header = ["source", "target"]
-
-with open('real_bot_user_edge_2.csv', 'w') as f:
+with open(os.path.join(cur_path, "bot_user_edge_3.csv"), 'w') as f:
     writer = csv.writer(f)
-    writer.writerow(header)
     for row in graphEdges_bot:
         writer.writerow(row)
 

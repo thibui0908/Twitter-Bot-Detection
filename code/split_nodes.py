@@ -1,7 +1,7 @@
 import networkx
 import csv
 
-r_user_file = open("real_bot_user_edge_0.csv")
+r_user_file = open("./data/real_bot_user_edge_0.csv")
 
 real_user_file = csv.reader(r_user_file)
 
@@ -22,7 +22,7 @@ for row in real_user_file:
 
 print("Number of nodes", len(nodes))
 
-with open('real_bot_user_nodes_0.csv', 'w') as f:
+with open('./data/real_bot_user_nodes_0.csv', 'w') as f:
     writer = csv.writer(f)
     for node in nodes:
         writer.writerow([node])
