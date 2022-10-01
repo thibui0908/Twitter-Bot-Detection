@@ -35,7 +35,7 @@ print("Min degree: ", degrees[len(degrees)-1][1])
 sum = 0
 
 for i in degrees:
-    sum = sum + i[1];
+    sum = sum + i[1]
     
 print("Average degree: ", sum/len(degrees))
 print("Number of connected components: ", nx.number_connected_components(G))
