@@ -15,7 +15,7 @@ def write_node_file(reader, filenum):
         rows.append(row)
     print("Number of nodes", len(nodes))
 
-    with open('./data/real_user_nodes/real_bot_user_nodes_{}.csv'.format(filenum), 'w') as f:
+    with open('./data/bot_user_nodes/bot_user_nodes_{}.csv'.format(filenum), 'w') as f:
         writer = csv.writer(f)
         for node in nodes:
             writer.writerow([node])
