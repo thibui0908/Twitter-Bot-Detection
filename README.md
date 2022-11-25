@@ -14,6 +14,10 @@ The dataset contains information for labeled users, where we retrieve their twee
 
 ![image1](https://user-images.githubusercontent.com/60374374/191357972-546e425b-d879-4dd6-a98b-b592ed1a58e7.png)
 
+## Experimental Social Network Analysis Result
+
+## Weisfeiler-Lehman Subtree Kernel
+
 ## Citation
 Please cite Twitter Bot Detection using Social Network Analysis if you use the dataset or this repository
 ```
