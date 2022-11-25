@@ -6,8 +6,8 @@ import networkx as nx
 import os
 import re
 
-directory_edge = './data/bot_user_edge'
-directory_node = './data/bot_user_nodes'
+directory_edge = './data/real_user_edge'
+directory_node = './data/real_user_nodes'
 
 files_edge = [file for file in os.listdir(directory_edge)]
 files_node = [file for file in os.listdir(directory_node)]
@@ -64,9 +64,8 @@ for filename in files_edge:
     try:
         if os.path.getsize(os.path.join(directory_edge,filename)) > 0:
             with open(os.path.join(directory_edge, filename), 'r', encoding='utf-8') as openfile:
-                print(filename)
                 filenum = get_numbers_from_filename(filename)
-                with open(os.path.join(directory_node, 'bot_user_nodes_{}.csv'.format(filenum)), 'r', encoding='utf-8') as nodefile:
+                with open(os.path.join(directory_node, 'real_user_nodes_{}.csv'.format(filenum)), 'r', encoding='utf-8') as nodefile:
                     count = count + 1
                     res = social_network_analysis(openfile, nodefile)
                     number_of_nodes = number_of_nodes + res[0]
@@ -77,19 +76,21 @@ for filename in files_edge:
                     min_degree = min_degree + res[5]
                     average_degree = average_degree + res[6]
                     connected_component = connected_component + res[7]
-                    print('File number ', filenum)
     except Exception as e:
         print("error:",e)
 
-print("File number ", count)
-print("Number of nodes: ", number_of_nodes/count)
-print("Number of edges: ", number_of_edges/count)
+print("---------------------------------------------------------------------")
+print("Number of nodes: ", number_of_nodes)
+print("Average number of nodes: ", number_of_nodes/count)
+print("Number of edges: ", number_of_edges)
+print("Average number of edges: ", number_of_edges/count)
 print("Number of isolated nodes", number_isolated/count)
-print("Density of a graph: ", density/count)
+print("Average density of a graph: ", density/count)
 
-print("Max degree: ", max_degree/count)
-print("Min degree: ", min_degree/count)
+print("Average max degree: ", max_degree/count)
+print("Average min degree: ", min_degree/count)
     
 print("Average degree: ", average_degree/count)
-print("Number of connected components: ", connected_component/count)
+print("Average number of connected components: ", connected_component/count)
+print("---------------------------------------------------------------------")
 
