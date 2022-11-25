@@ -15,7 +15,7 @@ def write_node_file(reader, filenum):
         rows.append(row)
     print("Number of nodes", len(nodes))
 
-    with open('./data/bot_user_nodes/bot_user_nodes_{}.csv'.format(filenum), 'w') as f:
+    with open('./data/real_user_nodes/real_user_nodes_{}.csv'.format(filenum), 'w') as f:
         writer = csv.writer(f)
         for node in nodes:
             writer.writerow([node])
@@ -23,7 +23,7 @@ def write_node_file(reader, filenum):
 def get_numbers_from_filename(filename):
     return re.search(r'\d+', filename).group(0)
 
-directory = './data/bot_user_edge'
+directory = './data/real_user_edge'
 
 files = [file for file in os.listdir(directory)]
 print(len(files))
